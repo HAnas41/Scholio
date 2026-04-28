@@ -1,0 +1,37 @@
+import { getApp, getApps, initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+};
+
+const missingFirebaseKeys = Object.entries(firebaseConfig)
+  .filter(([, value]) => !value)
+  .map(([key]) => key);
+
+export const firebaseConfigError =
+  missingFirebaseKeys.length > 0
+    ? new Error(
+        `[firebase] Missing Firebase config keys: ${missingFirebaseKeys.join(', ')}. ` +
+          'For Next.js client Firebase, NEXT_PUBLIC_* values must be present at build time.'
+      )
+    : null;
+
+if (firebaseConfigError) {
+  console.error(firebaseConfigError.message);
+}
+
+export const app = firebaseConfigError
+  ? null
+  : getApps().length > 0
+    ? getApp()
+    : initializeApp(firebaseConfig);
+
+export const auth = app ? getAuth(app) : null;
+export const db = app ? getFirestore(app) : null;

@@ -1,0 +1,47 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Student or Admin user profile",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "admin"] },
+        "degreeLevel": { "type": "string" },
+        "fieldOfStudy": { "type": "string" },
+        "cgpaOrMarks": { "type": "number" },
+        "currentUniversity": { "type": "string" },
+        "graduationYear": { "type": "number" }
+      },
+      "required": ["name", "email", "role"]
+    },
+    "Scholarship": {
+      "title": "Scholarship",
+      "description": "Scholarship listing",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "country": { "type": "string" },
+        "degreeRequired": { "type": "string" },
+        "fieldRequired": { "type": "string" },
+        "minimumCGPA": { "type": "number" },
+        "deadline": { "type": "string" },
+        "applyLink": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["title", "country", "degreeRequired", "fieldRequired", "minimumCGPA", "deadline", "applyLink"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles"
+    },
+    "/scholarships/{scholarshipId}": {
+      "schema": { "$ref": "#/entities/Scholarship" },
+      "description": "Scholarships directory"
+    }
+  }
+}

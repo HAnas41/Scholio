@@ -1,0 +1,6 @@
+{
+  "name": "Scholio-AI Scholarship Finder",
+  "description": "AI Scholarship Finder for Pakistani Students. Connects students with scholarships using Gemini AI ranking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
